@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE SENSORY CONNECTOME | V11</title>
+    <meta name="description" content="A sensory, interactive experience of AI-driven cognitive atrophy.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="cinematic-v11">
+    <!-- AUDIO UNLOCK OVERLAY -->
+    <div id="audio-unlock">
+        <div class="unlock-content">
+            <svg viewBox="0 0 24 24" class="headphone-icon"><path d="M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1v-6h3v4zM3 19a2 2 0 0 0 2 2h1v-6H3v4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h2>THE SENSORY CONNECTOME</h2>
+            <p>This experience generates procedural audio to represent cognitive states. Headphones recommended.</p>
+            <button id="btn-enter" class="btn-clean">INITIALIZE LAB</button>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- Fixed Background Simulation -->
+    <div id="sim-viewport">
+        <canvas id="hybrid-canvas"></canvas>
+        <div class="vignette"></div>
+    </div>
+
+    <!-- HUD Metrics -->
+    <div id="hud-pinned" class="glass-ui">
+        <div class="hud-item label-stagger">
+            <label>CURRENT STUDY</label>
+            <div class="v" id="hud-study-name">INTRODUCTION</div>
+        </div>
+        <div class="hud-item label-stagger" style="transition-delay: 0.1s">
+            <label>RETENTION INDEX</label>
+            <div class="v" id="hud-retention">--%</div>
+        </div>
+        <div class="hud-item label-stagger" style="transition-delay: 0.2s">
+            <label>NEURAL PLASTICITY</label>
+            <div class="v" id="hud-plasticity">--%</div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside id="study-index">
+        <div class="index-item active intro-stagger" onclick="scrollToScene('intro')">Introduction</div>
+        <div class="index-item intro-stagger" style="transition-delay: 0.1s" onclick="scrollToScene('alex')">The Alex Case</div>
+        <div class="index-item intro-stagger" style="transition-delay: 0.2s" onclick="scrollToScene('an')">An et al. Study</div>
+        <div class="index-item intro-stagger" style="transition-delay: 0.3s" onclick="scrollToScene('pilot')">Casner Pilot Study</div>
+    </aside>
+
+    <!-- Narrative -->
+    <main id="narrative-scroller">
+        <!-- Intro -->
+        <section class="scene-block" id="scene-intro" data-study="intro">
+            <div class="narrative-card centered">
+                <h1 class="stagger-el">AI in Education: Where Does it Add Up?</h1>
+                <p class="stagger-el">Abraham Su (2026) investigates whether AI is a complementary tool or a replacement for learning itself. <br><br><span class="sensory-trigger instruction">Drag any neuron on the background canvas</span> to feel the tension of physical cognitive effort.</p>
+                <div class="scroll-prompt stagger-el">SCROLL TO TRANSCEND</div>
+            </div>
+        </section>
+
+        <!-- Alex Study -->
+        <section class="scene-block" id="scene-alex" data-study="alex">
+            <div class="narrative-card left">
+                <h3 class="stagger-el">01. The Alex Factor</h3>
+                <p class="stagger-el">Abraham Su observes Alex, a student who reduced a <span class="sensory-trigger" data-target="alex-high">9-hour manual task</span> to just <span class="sensory-trigger" data-target="alex-low">60 minutes</span> via Claude. Result? <span class="sensory-trigger" data-target="alex-fail">0% Semantic Retention</span>.</p>
+                
+                <div class="inline-tool stagger-el">
+                    <label>Listen to the Neural Decay (1h vs 9h)</label>
+                    <input type="range" id="slider-alex" min="0" max="100" value="90">
+                    <div class="evidence-stats">
+                        <span>Measured Retention: <strong id="alex-retention">0%</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- An et al. Study: Scrub to Focus -->
+        <section class="scene-block" id="scene-an" data-study="an">
+            <div class="narrative-card right">
+                <h3 class="stagger-el">02. LLM-Retrieval Mastery</h3>
+                <p class="stagger-el">A study by An et al. (2025) reveals that LLM-generated retrieval practice achieved significantly higher retention. Effort is required to combat the forgetting curve.</p>
+                
+                <div class="inline-game stagger-el">
+                    <label>COGNITIVE TASK: Scrub to focus and retrieve the data.</label>
+                    <div class="scrub-container">
+                        <div class="scrub-hidden-data">89% ACCURACY</div>
+                        <canvas id="scrub-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="cit stagger-el">Source: An et al, 2025 (p. 2)</div>
+            </div>
+        </section>
+
+        <!-- Pilot Study: Awareness Radar -->
+        <section class="scene-block" id="scene-pilot" data-study="pilot">
+            <div class="narrative-card left">
+                <h3 class="stagger-el">03. Automation Atrophy</h3>
+                <p class="stagger-el">Casner et al. (2024) found "major declines in cognitive skills" in pilots operating with <span class="sensory-trigger" data-target="pilot-auto">high automation</span>. When active monitoring ceases, awareness actively drifts.</p>
+                
+                <div class="inline-game stagger-el">
+                    <label>STABILIZATION TASK: Drag the node to keep awareness centered.</label>
+                    <div class="radar-container" id="radar-game">
+                        <div class="radar-zone"></div>
+                        <div class="radar-dot" id="radar-dot"></div>
+                    </div>
+                </div>
+                <div class="cit stagger-el">Source: Casner et al, 2024 via Hasan 2025</div>
+            </div>
+        </section>
+
+        <!-- Synthesis -->
+        <section class="scene-block" id="scene-synthesis" data-study="synthesis">
+            <div class="narrative-card centered">
+                <h3 class="stagger-el">Final Synthesis</h3>
+                <p class="stagger-el">Outsourcing retrieval results in <strong>90% neural deficit</strong>. Mentally engaged work is the only sustainable fuel for the brain.</p>
+                <button class="btn-clean stagger-el" onclick="window.scrollTo(0,0)">RESTART EXPERIMENT</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
